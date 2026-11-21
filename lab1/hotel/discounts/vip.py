@@ -1,4 +1,4 @@
-from shop.discounts.base import DiscountStrategy
+from hotel.discounts.base import DiscountStrategy
 
 
 class VipDiscount(DiscountStrategy):

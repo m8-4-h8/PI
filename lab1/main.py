@@ -1,60 +1,60 @@
 """Composition root: тут і лише тут обираються конкретні реалізації."""
 
-from shop.discounts.standard import StandardDiscount
-from shop.discounts.vip import VipDiscount
-from shop.extensions.paypal import PayPalPaymentProcessor
-from shop.extensions.sms import SmsNotifier
-from shop.extensions.wholesale import WholesaleDiscount
-from shop.models import Item, Order
-from shop.notifiers.email import EmailNotifier
-from shop.order_service import OrderService
-from shop.payments.credit_card import CreditCardPaymentProcessor
-from shop.payments.crypto import CryptoPaymentProcessor
-from shop.repositories.mysql import MySqlOrderRepository
-from shop.validation import NonEmptyOrderValidator
+from hotel.booking_service import HotelBookingService
+from hotel.discounts.standard import StandardDiscount
+from hotel.discounts.vip import VipDiscount
+from hotel.extensions.corporate import CorporateDiscount
+from hotel.extensions.paypal import PayPalPaymentProcessor
+from hotel.extensions.sms import SmsNotifier
+from hotel.models import Booking, Room
+from hotel.notifiers.email import EmailNotifier
+from hotel.payments.credit_card import CreditCardPaymentProcessor
+from hotel.payments.crypto import CryptoPaymentProcessor
+from hotel.repositories.mysql import MySqlBookingRepository
+from hotel.validation import HasRoomsValidator
 
 
-def build_base_service() -> OrderService:
-    """Та сама поведінка, що й у старому OrderProcessor."""
-    return OrderService(
-        validator=NonEmptyOrderValidator(),
+def build_base_service() -> HotelBookingService:
+    """Та сама поведінка, що й у старому HotelBookingProcessor."""
+    return HotelBookingService(
+        validator=HasRoomsValidator(),
         discounts={"VIP": VipDiscount(), "Standard": StandardDiscount()},
         payments={"CreditCard": CreditCardPaymentProcessor(), "Crypto": CryptoPaymentProcessor()},
-        repository=MySqlOrderRepository(),
+        repository=MySqlBookingRepository(),
         notifier=EmailNotifier(),
     )
 
 
-def build_extended_service() -> OrderService:
-    """Завдання 3: Wholesale, PayPal і SMS підключені без зміни жодного наявного класу."""
-    return OrderService(
-        validator=NonEmptyOrderValidator(),
+def build_extended_service() -> HotelBookingService:
+    """Завдання 3: Corporate, PayPal і SMS підключені без зміни жодного наявного класу."""
+    return HotelBookingService(
+        validator=HasRoomsValidator(),
         discounts={
             "VIP": VipDiscount(),
             "Standard": StandardDiscount(),
-            "Wholesale": WholesaleDiscount(),
+            "Corporate": CorporateDiscount(),
         },
         payments={
             "CreditCard": CreditCardPaymentProcessor(),
             "Crypto": CryptoPaymentProcessor(),
             "PayPal": PayPalPaymentProcessor(),
         },
-        repository=MySqlOrderRepository(),
+        repository=MySqlBookingRepository(),
         notifier=SmsNotifier(),
     )
 
 
 def main() -> None:
-    items = [Item("Laptop", 1000.0), Item("Mouse", 50.0)]
+    rooms = [Room("305", 1000.0), Room("306", 50.0)]
 
     print("=== Базова конфігурація ===")
     base = build_base_service()
-    base.process_order(Order(1, "VIP", "vip@example.com", items=items), "CreditCard")
+    base.process_booking(Booking(1, "VIP", "vip@example.com", rooms=rooms), "CreditCard")
 
     print("\n=== Розширена конфігурація (Завдання 3) ===")
     extended = build_extended_service()
-    extended.process_order(
-        Order(2, "Wholesale", "shop@example.com", "+380501234567", items=items), "PayPal"
+    extended.process_booking(
+        Booking(2, "Corporate", "corp@example.com", "+380501234567", rooms=rooms), "PayPal"
     )
 
 

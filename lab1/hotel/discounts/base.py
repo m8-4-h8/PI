@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class DiscountStrategy(ABC):
-    """Стратегія знижки для одного типу клієнта."""
+    """Стратегія знижки для одного типу гостя."""
 
     @abstractmethod
     def rate(self) -> float:

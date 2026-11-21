@@ -2,7 +2,7 @@
 
 Бруско Максим, група МФ-51, варіант 1.
 
-- [Лабораторна №1 — SOLID](lab1/README.md)
+- [Лабораторна №1 — SOLID (HotelBookingProcessor)](lab1/README.md)
 - [Лабораторна №2 — GoF: Observer, Strategy, Factory Method](lab2/README.md)
 - [Лабораторна №3 — Clean Architecture, Ports & Adapters](lab3/README.md)
 - [Лабораторна №4 — TDD, property-based, мутаційне тестування](lab4/README.md)

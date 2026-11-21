@@ -1,4 +1,4 @@
-from shop.payments.base import PaymentProcessor
+from hotel.payments.base import PaymentProcessor
 
 
 class PayPalPaymentProcessor(PaymentProcessor):
