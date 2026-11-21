@@ -3,5 +3,6 @@
 Бруско Максим, група МФ-51, варіант 1.
 
 - [Лабораторна №1 — SOLID](lab1/README.md)
+- [Лабораторна №2 — GoF: Observer, Strategy, Factory Method](lab2/README.md)
 
 Python 3.10+, сторонні бібліотеки не потрібні.
