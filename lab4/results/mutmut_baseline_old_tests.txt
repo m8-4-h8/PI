@@ -1,0 +1,11 @@
+# mutmut 2.5.1, лише два старі тести (test_no_discount_below_threshold, test_discount_above_threshold),
+# код уже з виправленням >=. Демонстрація: 100% покриття рядків, але слабкий набір.
+2. Checking mutants
+ 7/7  🎉 5  ⏰ 0  🤔 0  🙁 2  🔇 0
+
+Survived 🙁 (2)
+---- loyalty/discount.py (2) ----
+1, 5
+
+#1: -    DISCOUNT_THRESHOLD = 1000   +    DISCOUNT_THRESHOLD = 1001
+#5: -        if booking_total >= self.DISCOUNT_THRESHOLD:   +        if booking_total > self.DISCOUNT_THRESHOLD:

@@ -1,0 +1,8 @@
+# mutmut 2.5.1 — усі мутанти для loyalty/discount.py
+#1  DISCOUNT_THRESHOLD = 1000  ->  DISCOUNT_THRESHOLD = 1001
+#2  DISCOUNT_THRESHOLD = 1000  ->  DISCOUNT_THRESHOLD = None
+#3  DISCOUNT_RATE = 0.10       ->  DISCOUNT_RATE = 1.1
+#4  DISCOUNT_RATE = 0.10       ->  DISCOUNT_RATE = None
+#5  if booking_total >= ...    ->  if booking_total > ...
+#6  booking_total * RATE       ->  booking_total / RATE
+#7  return 0.0                 ->  return 1.0

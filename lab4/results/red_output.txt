@@ -16,7 +16,7 @@ ____________________ test_discount_at_threshold_is_applied _____________________
 >       assert calc.calculate(1000) == 100
 E       assert 0.0 == 100
 E        +  where 0.0 = calculate(1000)
-E        +    where calculate = <loyalty.discount.LoyaltyDiscountCalculator object at 0x7f4b48d02490>.calculate
+E        +    where calculate = <loyalty.discount.LoyaltyDiscountCalculator object at 0x...>.calculate
 
 tests/test_discount.py:20: AssertionError
 =========================== short test summary info ============================
