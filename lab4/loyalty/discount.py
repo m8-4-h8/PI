@@ -5,6 +5,6 @@ class LoyaltyDiscountCalculator:
 
     def calculate(self, booking_total: float) -> float:
         """Повертає суму знижки для бронювання на суму booking_total."""
-        if booking_total > self.DISCOUNT_THRESHOLD:
+        if booking_total >= self.DISCOUNT_THRESHOLD:
             return booking_total * self.DISCOUNT_RATE
         return 0.0

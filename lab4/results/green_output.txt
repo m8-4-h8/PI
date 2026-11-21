@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/user/PI/lab4
+configfile: pyproject.toml
+testpaths: tests
+plugins: platformdirs-4.14.8, hypothesis-6.170.17
+collected 3 items
+
+tests/test_discount.py ...                                               [100%]
+
+============================== 3 passed in 0.09s ===============================
