@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/user/PI/lab4
+configfile: pyproject.toml
+testpaths: tests
+plugins: platformdirs-4.14.8, hypothesis-6.170.17
+collected 3 items
+
+tests/test_discount.py ..F                                               [100%]
+
+=================================== FAILURES ===================================
+____________________ test_discount_at_threshold_is_applied _____________________
+
+    def test_discount_at_threshold_is_applied():
+        calc = LoyaltyDiscountCalculator()
+>       assert calc.calculate(1000) == 100
+E       assert 0.0 == 100
+E        +  where 0.0 = calculate(1000)
+E        +    where calculate = <loyalty.discount.LoyaltyDiscountCalculator object at 0x7f4b48d02490>.calculate
+
+tests/test_discount.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_discount.py::test_discount_at_threshold_is_applied - assert...
+========================= 1 failed, 2 passed in 0.11s ==========================
