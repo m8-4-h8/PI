@@ -1,0 +1,19 @@
+Timing is on.
+BEGIN
+Time: 0.242 ms
+INSERT 0 200000
+Time: 1091.283 ms (00:01.091)
+ROLLBACK
+Time: 0.220 ms
+DROP INDEX
+Time: 339.147 ms
+BEGIN
+Time: 0.138 ms
+INSERT 0 200000
+Time: 525.843 ms
+ROLLBACK
+Time: 0.160 ms
+CREATE INDEX
+Time: 5434.562 ms (00:05.435)
+VACUUM
+Time: 380.738 ms

@@ -1,0 +1,27 @@
+=== Сесія A (оператор)
+--- A: BEGIN ISOLATION LEVEL SERIALIZABLE
+BEGIN
+--- A: перше читання
+ id | total  | status 
+----+--------+--------
+ 42 | 394.21 | paid
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+--- A: друге читання
+ id | total  | status 
+----+--------+--------
+ 42 | 394.21 | paid
+(1 row)
+
+--- A: UPDATE (часткове повернення)
+psql:sql/06_isolation_serializable_operator.sql:10: ERROR:  could not serialize access due to concurrent update
+ROLLBACK
+
+=== Сесія B (шлюз)
+--- B: UPDATE status = checked_in; COMMIT
+UPDATE 1

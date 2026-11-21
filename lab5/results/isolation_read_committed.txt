@@ -1,0 +1,25 @@
+=== Сесія A (оператор)
+--- A: BEGIN ISOLATION LEVEL READ COMMITTED
+BEGIN
+--- A: перше читання
+ id | total  | status 
+----+--------+--------
+ 42 | 394.21 | paid
+(1 row)
+
+ pg_sleep 
+----------
+ 
+(1 row)
+
+--- A: друге читання
+ id | total  |   status   
+----+--------+------------
+ 42 | 394.21 | checked_in
+(1 row)
+
+COMMIT
+
+=== Сесія B (шлюз)
+--- B: UPDATE status = checked_in; COMMIT
+UPDATE 1

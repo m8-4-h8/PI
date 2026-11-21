@@ -1,0 +1,37 @@
+                                                                                             QUERY PLAN                                                                                              
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=25344.18..25344.23 rows=20 width=36) (actual time=111.089..111.943 rows=20 loops=1)
+   Buffers: shared hit=271192
+   ->  Sort  (cost=25344.18..25349.18 rows=2000 width=36) (actual time=111.087..111.939 rows=20 loops=1)
+         Sort Key: (sum(total)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         Buffers: shared hit=271192
+         ->  Finalize GroupAggregate  (cost=24769.26..25290.96 rows=2000 width=36) (actual time=104.879..111.228 rows=2000 loops=1)
+               Group Key: hotel_id
+               Buffers: shared hit=271189
+               ->  Gather Merge  (cost=24769.26..25235.96 rows=4000 width=36) (actual time=104.864..107.183 rows=6000 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=271189
+                     ->  Sort  (cost=23769.24..23774.24 rows=2000 width=36) (actual time=102.197..102.418 rows=2000 loops=3)
+                           Sort Key: hotel_id
+                           Sort Method: quicksort  Memory: 236kB
+                           Buffers: shared hit=271189
+                           Worker 0:  Sort Method: quicksort  Memory: 236kB
+                           Worker 1:  Sort Method: quicksort  Memory: 236kB
+                           ->  Partial HashAggregate  (cost=23634.58..23659.58 rows=2000 width=36) (actual time=101.029..101.651 rows=2000 loops=3)
+                                 Group Key: hotel_id
+                                 Batches: 1  Memory Usage: 881kB
+                                 Buffers: shared hit=271175
+                                 Worker 0:  Batches: 1  Memory Usage: 881kB
+                                 Worker 1:  Batches: 1  Memory Usage: 881kB
+                                 ->  Parallel Index Only Scan using idx_bookings_paid_report on bookings  (cost=0.56..22482.53 rows=230411 width=10) (actual time=0.038..61.130 rows=184889 loops=3)
+                                       Index Cond: ((status = 'paid'::text) AND (created_at >= '2026-01-01 00:00:00+00'::timestamp with time zone))
+                                       Heap Fetches: 0
+                                       Buffers: shared hit=271175
+ Planning:
+   Buffers: shared hit=172
+ Planning Time: 0.453 ms
+ Execution Time: 112.152 ms
+(33 rows)
+
