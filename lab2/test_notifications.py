@@ -5,11 +5,11 @@ from pathlib import Path
 
 from notifications.factory.sender_factory import SenderFactory
 from notifications.gateways.base import MessageGateway
-from notifications.models import Customer, Order
+from notifications.models import Guest, Booking
 from notifications.observers.email_observer import EmailObserver
 from notifications.observers.push_observer import PushObserver
 from notifications.observers.sms_observer import SmsObserver
-from notifications.order_service import OrderService
+from notifications.booking_service import HotelBookingService
 from notifications.retry.exponential_backoff import ExponentialBackoffStrategy
 from notifications.retry.fixed_delay import FixedDelayStrategy
 from notifications.retry.no_retry import NoRetryStrategy
@@ -33,31 +33,31 @@ def no_sleep(_):
     pass
 
 
-ALL = Customer("a@b.c", "+380", frozenset({"email", "sms", "push"}))
+ALL = Guest("a@b.c", "+380", frozenset({"email", "sms", "push"}))
 
 
 def test_backoff_retries_until_success():
     gw = CountingGateway(fail_times=2)
-    EmailObserver(gw, ExponentialBackoffStrategy(sleep=no_sleep)).notify(Order(1, ALL, 1))
+    EmailObserver(gw, ExponentialBackoffStrategy(sleep=no_sleep)).notify(Booking(1, ALL, 1))
     assert (gw.calls, gw.delivered) == (3, 1)
 
 
 def test_sms_does_not_retry():
     gw = CountingGateway(fail_times=1)
-    SmsObserver(gw, NoRetryStrategy()).notify(Order(1, ALL, 1))
+    SmsObserver(gw, NoRetryStrategy()).notify(Booking(1, ALL, 1))
     assert (gw.calls, gw.delivered) == (1, 0)
 
 
 def test_fixed_delay_waits_same_time():
     waits = []
     gw = CountingGateway(fail_times=2)
-    PushObserver(gw, FixedDelayStrategy(delay=0.5, sleep=waits.append)).notify(Order(1, ALL, 1))
+    PushObserver(gw, FixedDelayStrategy(delay=0.5, sleep=waits.append)).notify(Booking(1, ALL, 1))
     assert waits == [0.5, 0.5] and gw.delivered == 1
 
 
 def test_customer_preferences_respected():
     gw = CountingGateway()
-    SmsObserver(gw, NoRetryStrategy()).notify(Order(1, Customer("x@y.z"), 1))
+    SmsObserver(gw, NoRetryStrategy()).notify(Booking(1, Guest("x@y.z"), 1))
     assert gw.calls == 0
 
 
@@ -72,20 +72,20 @@ def test_factory_builds_right_pairs():
 
 
 def test_service_notifies_every_observer():
-    service, seen = OrderService(), []
+    service, seen = HotelBookingService(), []
 
     class Spy:
-        def notify(self, order):
-            seen.append(order.id)
+        def notify(self, booking):
+            seen.append(booking.id)
 
     service.subscribe(Spy())
     service.subscribe(Spy())
-    service.place_order(Order(7, ALL, 1))
+    service.place_booking(Booking(7, ALL, 1))
     assert seen == [7, 7]
 
 
-def test_order_service_has_no_type_checks():
-    source = Path("notifications/order_service.py").read_text(encoding="utf-8")
+def test_booking_service_has_no_type_checks():
+    source = Path("notifications/booking_service.py").read_text(encoding="utf-8")
     tree = ast.parse(source)
     calls = {n.func.id for n in ast.walk(tree) if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)}
     assert "isinstance" not in calls and '"email"' not in source and '"sms"' not in source

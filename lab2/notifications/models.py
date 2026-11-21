@@ -2,10 +2,10 @@ from dataclasses import dataclass, field
 
 
 @dataclass(frozen=True)
-class Customer:
+class Guest:
     email: str
     phone: str = ""
-    # Канали, на які клієнт погодився. Набір, а не прапорці wants_email/wants_sms:
+    # Канали, на які гість погодився. Набір, а не прапорці wants_email/wants_sms:
     # новий канал не вимагає нового поля в моделі.
     channels: frozenset[str] = field(default_factory=lambda: frozenset({"email"}))
 
@@ -14,7 +14,7 @@ class Customer:
 
 
 @dataclass(frozen=True)
-class Order:
+class Booking:
     id: int
-    customer: Customer
+    guest: Guest
     total: float

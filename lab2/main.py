@@ -1,11 +1,11 @@
-"""Налаштування застосунку: підписка відбувається тут один раз, а не всередині place_order."""
+"""Налаштування застосунку: підписка відбувається тут один раз, а не всередині place_booking."""
 
 from notifications.factory.sender_factory import SenderFactory
 from notifications.gateways.console import ConsoleGateway
 from notifications.gateways.flaky import FlakyGateway
-from notifications.models import Customer, Order
+from notifications.models import Guest, Booking
 from notifications.observers.analytics_observer import AnalyticsObserver
-from notifications.order_service import OrderService
+from notifications.booking_service import HotelBookingService
 
 
 def main() -> None:
@@ -17,19 +17,19 @@ def main() -> None:
     }
     factory = SenderFactory(gateways, delay_scale=0.1)
 
-    service = OrderService()
+    service = HotelBookingService()
     for channel in ("email", "sms", "push"):
         service.subscribe(factory.create(channel))
     analytics = AnalyticsObserver()
     service.subscribe(analytics)
 
-    alice = Customer("alice@example.com", "+380501112233", frozenset({"email", "sms", "push"}))
-    bob = Customer("bob@example.com", channels=frozenset({"email"}))
+    alice = Guest("alice@example.com", "+380501112233", frozenset({"email", "sms", "push"}))
+    bob = Guest("bob@example.com", channels=frozenset({"email"}))
 
-    print("=== Замовлення 1: email + sms + push ===")
-    service.place_order(Order(1, alice, 1050.0))
-    print("\n=== Замовлення 2: лише email ===")
-    service.place_order(Order(2, bob, 99.9))
+    print("=== Бронювання 1: email + sms + push ===")
+    service.place_booking(Booking(1, alice, 1050.0))
+    print("\n=== Бронювання 2: лише email ===")
+    service.place_booking(Booking(2, bob, 99.9))
 
     print(f"\nЗаписів у журналі аналітики: {len(analytics.journal)}")
 

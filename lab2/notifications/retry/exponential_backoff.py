@@ -1,7 +1,7 @@
 import time
 from collections.abc import Callable
 
-from notifications.models import Order
+from notifications.models import Booking
 from notifications.retry.base import RetryStrategy, Sender
 
 
@@ -18,16 +18,16 @@ class ExponentialBackoffStrategy(RetryStrategy):
         self._base_delay = base_delay
         self._sleep = sleep
 
-    def send(self, sender: Sender, order: Order) -> bool:
+    def send(self, sender: Sender, booking: Booking) -> bool:
         for attempt in range(1, self._max_attempts + 1):
             try:
-                sender(order)
+                sender(booking)
                 return True
             except ConnectionError as error:
                 if attempt == self._max_attempts:
-                    print(f"  [retry] order {order.id}: gave up after {attempt} attempts ({error})")
+                    print(f"  [retry] booking {booking.id}: gave up after {attempt} attempts ({error})")
                     return False
                 delay = self._base_delay * 2 ** (attempt - 1)
-                print(f"  [retry] order {order.id}: attempt {attempt} failed, waiting {delay:.1f}s")
+                print(f"  [retry] booking {booking.id}: attempt {attempt} failed, waiting {delay:.1f}s")
                 self._sleep(delay)
         return False

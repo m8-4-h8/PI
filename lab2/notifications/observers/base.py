@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 
-from notifications.models import Order
+from notifications.models import Booking
 
 
-class OrderObserver(ABC):
+class BookingObserver(ABC):
     @abstractmethod
-    def notify(self, order: Order) -> None:
+    def notify(self, booking: Booking) -> None:
         ...
