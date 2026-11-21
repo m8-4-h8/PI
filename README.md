@@ -4,5 +4,6 @@
 
 - [Лабораторна №1 — SOLID](lab1/README.md)
 - [Лабораторна №2 — GoF: Observer, Strategy, Factory Method](lab2/README.md)
+- [Лабораторна №3 — Clean Architecture, Ports & Adapters](lab3/README.md)
 
-Python 3.10+, сторонні бібліотеки не потрібні.
+Python 3.10+. Лаби 1–3 — без сторонніх бібліотек (для інтеграційного тесту лаби 3 — `psycopg2-binary`).
