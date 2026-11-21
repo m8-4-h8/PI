@@ -1,0 +1,21 @@
+.....                                                                    [100%]
+============================ Hypothesis Statistics =============================
+tests/test_discount.py::test_property_discount_matches_specification:
+
+  - during generate phase (0.09 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 500 passing, 0 failing, and 0 invalid test cases
+
+  - Stopped because settings.max_examples=500
+
+
+tests/test_discount.py::test_property_discount_is_never_negative_and_never_above_ten_percent:
+
+  - during generate phase (0.02 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 100 passing, 0 failing, and 0 invalid test cases
+
+  - Stopped because settings.max_examples=100
+
+
+5 passed in 0.14s
