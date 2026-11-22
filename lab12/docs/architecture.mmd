@@ -1,0 +1,51 @@
+flowchart TB
+    U["Клієнти: браузер / мобільний застосунок"]
+
+    U -->|"статика, афіші, waiting room"| CDN["CDN<br/>статика, афіші, схеми залів,<br/>waiting room, лічильник черги (TTL 2 с)"]
+    U -->|"API-запити"| WAF["WAF + DDoS-захист"]
+    CDN -.->|"origin"| S3[("Object storage<br/>медіа")]
+    WAF --> GW["API Gateway<br/>JWT, rate limit, перевірка admission token"]
+    GW --> LB["L7 Load Balancer<br/>Least Connections"]
+
+    LB --> APP
+    subgraph APP["Пул серверів застосунку — stateless, горизонтальне масштабування"]
+        direction LR
+        CAT["Event Catalog"]
+        SRCH["Search"]
+        VQ["Virtual Queue"]
+        RES["Reservation<br/>(holds місць)"]
+        ORD["Order / Payment"]
+        ADM["Admin<br/>(організатори)"]
+    end
+
+    VQ -.->|"номер, якого вже пускають"| CDN
+    CAT --> REDIS
+    VQ --> REDIS
+    RES --> REDIS
+    subgraph REDIS["Redis Cluster — consistent hashing"]
+        direction LR
+        RC["кеш афіші<br/>cache-aside, TTL 5 хв"]
+        RA["знімок доступності<br/>TTL 2 с"]
+        RQ["черга: токени<br/>й лічильники"]
+    end
+
+    SRCH --> ES[("Elasticsearch<br/>пошук афіші")]
+    ORD --> PSP["Платіжний провайдер"]
+    ORD --> MQ[["Kafka: order.paid, seat.released"]]
+    RES --> MQ
+    MQ --> TIX["Ticketing + Notification workers"]
+
+    RES --> DB
+    ORD --> DB
+    TIX --> DB
+    CAT --> DB
+    ADM --> DB
+    subgraph DB["PostgreSQL — шарди за event_id (кожен: primary + 2 репліки)"]
+        direction LR
+        DIR[("shard directory<br/>event_id → shard")]
+        S1[("shard 1")]
+        S2[("shard 2")]
+        SN[("shard N")]
+        SH[("виділений шард<br/>хіт-події")]
+    end
+    GW --> UDB[("Users DB")]

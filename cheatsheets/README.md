@@ -15,3 +15,4 @@
 | 9 | STRIDE, SQL-инъекция, OAuth 2.0 | [lab9.md](lab9.md) |
 | 10 | Resilience: timeout, retry, CB, bulkhead, Saga | [lab10.md](lab10.md) |
 | 11 | Observability, SLO, error budget | [lab11.md](lab11.md) |
+| 12 | System Design: билеты на массовые мероприятия | [lab12.md](lab12.md) |

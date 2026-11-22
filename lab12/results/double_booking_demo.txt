@@ -1,0 +1,4 @@
+Наївний check-then-act: 80 покупців -> переможців: 6 (double-booking!)
+Умовний UPDATE ... WHERE status = 'available': 80 покупців -> переможців: 1
+Оплата двічі з тим самим Idempotency-Key: tk_d717c92b == tk_d717c92b -> квитків на місце: 1
+Спроба вставити другий квиток на те саме місце в обхід логіки: UNIQUE спрацював (UniqueViolation)
