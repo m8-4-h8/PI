@@ -1,0 +1,20 @@
+tests/test_bulkhead_idempotency.py::test_hung_payment_pool_does_not_block_inventory_pool PASSED
+tests/test_bulkhead_idempotency.py::test_same_idempotency_key_charges_exactly_once PASSED
+tests/test_bulkhead_idempotency.py::test_different_keys_are_different_payments PASSED
+tests/test_bulkhead_idempotency.py::test_reused_key_with_other_body_is_rejected PASSED
+tests/test_bulkhead_idempotency.py::test_missing_key_is_rejected PASSED
+tests/test_bulkhead_idempotency.py::test_concurrent_duplicates_charge_once PASSED
+tests/test_circuit_breaker.py::test_all_four_transitions_and_no_calls_while_open PASSED
+tests/test_circuit_breaker.py::test_half_open_allows_exactly_one_trial_call PASSED
+tests/test_circuit_breaker.py::test_success_in_closed_resets_failure_count PASSED
+tests/test_circuit_breaker.py::test_breakers_do_not_share_state PASSED
+tests/test_health_shutdown.py::test_live_and_ready_have_different_logic PASSED
+tests/test_health_shutdown.py::test_graceful_shutdown_order PASSED
+tests/test_retry.py::test_recovers_on_n_plus_one_attempt PASSED
+tests/test_retry.py::test_gives_up_after_max_attempts PASSED
+tests/test_retry.py::test_non_transient_error_is_not_retried PASSED
+tests/test_retry.py::test_full_jitter_is_random_and_bounded PASSED
+tests/test_saga.py::test_happy_path_confirms_booking PASSED
+tests/test_saga.py::test_room_taken_after_payment_triggers_refund PASSED
+tests/test_saga.py::test_refund_is_idempotent PASSED
+============================== 19 passed in 1.50s ==============================

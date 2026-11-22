@@ -1,0 +1,12 @@
+=== bk_1: CONFIRMED ===
+  PENDING: booking created (BookingService COMMIT)
+  PAYMENT_CAPTURED: PaymentCaptured ch_1 (PaymentService COMMIT)
+  CONFIRMED: RoomReserved double-1 (RoomInventoryService COMMIT)
+=== bk_2: CANCELLED ===
+  PENDING: booking created (BookingService COMMIT)
+  PAYMENT_CAPTURED: PaymentCaptured ch_2 (PaymentService COMMIT)
+  COMPENSATING: RoomUnavailable (RoomInventoryService нічого не змінив)
+  CANCELLED: PaymentRefunded re_1 (PaymentService COMMIT)
+Сповіщення гостям:
+  bk_1: бронювання підтверджено, номер double-1
+  bk_2: на жаль, номер double уже зайнятий, кошти повернено (re_1)

@@ -1,0 +1,15 @@
+Прогін 1:
+  спроба 1: 503 Service Unavailable (виклик 1); full jitter -> чекаємо    2.2 мс (межа 100 мс)
+  спроба 2: 503 Service Unavailable (виклик 2); full jitter -> чекаємо   87.5 мс (межа 200 мс)
+  спроба 3: 503 Service Unavailable (виклик 3); full jitter -> чекаємо  144.6 мс (межа 400 мс)
+  спроба 4: успіх {'room_type': 'double', 'free': 3}; разом 235 мс
+Прогін 2:
+  спроба 1: 503 Service Unavailable (виклик 1); full jitter -> чекаємо   27.0 мс (межа 100 мс)
+  спроба 2: 503 Service Unavailable (виклик 2); full jitter -> чекаємо  170.2 мс (межа 200 мс)
+  спроба 3: 503 Service Unavailable (виклик 3); full jitter -> чекаємо  285.4 мс (межа 400 мс)
+  спроба 4: успіх {'room_type': 'double', 'free': 3}; разом 483 мс
+Прогін 3:
+  спроба 1: 503 Service Unavailable (виклик 1); full jitter -> чекаємо   93.1 мс (межа 100 мс)
+  спроба 2: 503 Service Unavailable (виклик 2); full jitter -> чекаємо  147.3 мс (межа 200 мс)
+  спроба 3: 503 Service Unavailable (виклик 3); full jitter -> чекаємо  367.5 мс (межа 400 мс)
+  спроба 4: успіх {'room_type': 'double', 'free': 3}; разом 608 мс
