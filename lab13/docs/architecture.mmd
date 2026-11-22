@@ -1,0 +1,47 @@
+flowchart TB
+    C["Клієнти: iOS / Android / Desktop / Web<br/>локальна БД: UNIQUE(message_id), last_seq, Outbox"]
+
+    subgraph EDGE["Шар з'єднань — stateful, 41 вузол × 50 000 з'єднань"]
+        direction LR
+        LB["L4 Load Balancer<br/>Least Connections"] ==> CG["Connection Gateway<br/>WebSocket, heartbeat 30 с, ACK"]
+        CG <-->|"user/device → вузол"| SR[("Session Registry<br/>Redis, шардинг за user_id")]
+    end
+
+    subgraph PRES["Presence"]
+        direction LR
+        PS["Presence Service<br/>підписки, grace 30/60 с,<br/>coalescing 2 с"] <--> PR[("Presence Store<br/>Redis: стан, last seen")]
+    end
+
+    subgraph WRITE["Запис повідомлення"]
+        direction LR
+        MS["Message Service<br/>stateless"] <-->|"SET NX dedup,<br/>INCR seq"| DC[("Dedup Cache + Sequence<br/>Redis, TTL 24 год")]
+        MS ==>|"logged batch"| MST[("Message Store — Cassandra<br/>messages ((conv, month), seq)<br/>msg_by_client_id ((conv), message_id)")]
+    end
+
+    subgraph DELIV["Доставка"]
+        direction LR
+        K[["Kafka: messages.stored<br/>партиція = conversation_id"]] ==> DW["Delivery Workers<br/>consumer pool"]
+        DW -->|"офлайн: вказівник (conv, seq)"| UQ[("Undelivered Queue<br/>inbox на пристрій")]
+        DW -->|"офлайн"| PUSH["Push Service<br/>collapse key, CB + bulkhead"] --> APNS["APNs / FCM"]
+        DW --> GRP["Group Service<br/>учасники груп"]
+    end
+
+    subgraph RESTAPI["REST і медіа"]
+        direction LR
+        API["API Gateway<br/>JWT, rate limit"] --> SYNC["Sync API<br/>історія після last_seq"]
+        API --> MED["Media Service"] --> OBJ[("Object Storage<br/>медіа")]
+        CDN["CDN"] -.->|"origin"| OBJ
+    end
+
+    C ==>|"WebSocket (TLS)"| LB
+    C -->|"REST: логін, історія, медіа"| API
+    C -.->|"медіа"| CDN
+    CG -->|"connect / disconnect / підписки"| PS
+    PS -->|"пачки статусів"| CG
+    CG ==>|"send(message_id, attempt)"| MS
+    MST ==>|"CDC"| K
+    DW -->|"де отримувач?"| SR
+    DW ==>|"онлайн: кадр доставки"| CG
+    CG -->|"після reconnect: забрати inbox"| UQ
+    SYNC --> MST
+    APNS -.->|"сповіщення"| C
