@@ -11,3 +11,4 @@
 | 5 | PostgreSQL: индексы, EXPLAIN, изоляция | [lab5.md](lab5.md) |
 | 6 | NoSQL, CAP, Cache-aside | [lab6.md](lab6.md) |
 | 7 | Sync vs Async: REST, Kafka, идемпотентность | [lab7.md](lab7.md) |
+| 8 | Bounded Contexts, карта контекстов, Strangler Fig | [lab8.md](lab8.md) |
