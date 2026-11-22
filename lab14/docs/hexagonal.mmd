@@ -1,0 +1,45 @@
+flowchart LR
+    subgraph PRIMARY["Primary adapters"]
+        direction TB
+        W["Чат-віджет у PeopleFlow<br/>(WebSocket)"]
+        SL["Бот у Slack / Teams"]
+        EM["Email-канал підтримки"]
+    end
+
+    subgraph CORE["Ядро застосунку"]
+        direction TB
+        PP(["Primary Port<br/>SupportChatPort.ask(ctx, question, history)"])
+        UC["Use Case<br/>AnswerSupportQuestion<br/>гібридний пошук, RRF, re-ranking,<br/>поріг впевненості, промпт з бюджетом, ескалація"]
+        DOM["Домен: Chunk, Scored, Prompt,<br/>Answer, EscalationRequest"]
+        PP --> UC
+        UC --- DOM
+        UC --> E(["EmbeddingPort"])
+        UC --> V(["VectorSearchPort"])
+        UC --> K(["KeywordSearchPort"])
+        UC --> R(["RerankerPort"])
+        UC --> L(["LLMPort"])
+        UC --> X(["EscalationPort"])
+    end
+
+    W --> PP
+    SL --> PP
+    EM --> PP
+
+    subgraph SECONDARY["Secondary adapters"]
+        direction TB
+        EA["multilingual-e5-large<br/>(self-hosted) або OpenAI embeddings"]
+        VA["pgvector у PostgreSQL PeopleFlow"]
+        KA["PostgreSQL FTS (tsvector, uk)"]
+        RA["bge-reranker-v2-m3 / Cohere Rerank"]
+        LA1["Anthropic Claude адаптер"]
+        LA2["OpenAI / Azure OpenAI адаптер"]
+        XA["Helpdesk адаптер<br/>(Zendesk / Jira Service Management)"]
+    end
+
+    E --> EA
+    V --> VA
+    K --> KA
+    R --> RA
+    L --> LA1
+    L -.->|"заміна провайдера = новий адаптер"| LA2
+    X --> XA

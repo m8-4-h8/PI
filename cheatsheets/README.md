@@ -17,3 +17,4 @@
 | 11 | Observability, SLO, error budget | [lab11.md](lab11.md) |
 | 12 | System Design: билеты на массовые мероприятия | [lab12.md](lab12.md) |
 | 13 | System Design: real-time мессенджер | [lab13.md](lab13.md) |
+| 14 | RAG для базы знаний поддержки (PeopleFlow) | [lab14.md](lab14.md) |

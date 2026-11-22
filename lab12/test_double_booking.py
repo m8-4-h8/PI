@@ -1,6 +1,4 @@
 """Потрібен PostgreSQL (BOOKING_DSN). Без нього тест пропускається."""
-import os
-
 import pytest
 
 psycopg2 = pytest.importorskip("psycopg2")
