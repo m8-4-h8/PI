@@ -14,3 +14,4 @@
 | 8 | Bounded Contexts, карта контекстов, Strangler Fig | [lab8.md](lab8.md) |
 | 9 | STRIDE, SQL-инъекция, OAuth 2.0 | [lab9.md](lab9.md) |
 | 10 | Resilience: timeout, retry, CB, bulkhead, Saga | [lab10.md](lab10.md) |
+| 11 | Observability, SLO, error budget | [lab11.md](lab11.md) |
