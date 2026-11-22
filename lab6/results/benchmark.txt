@@ -1,0 +1,6 @@
+Запитів: 500, унікальних номерів у послідовності: 48
+Варіант                           Час, с   Сер. затримка, мс  db_calls
+SlowRoomAvailabilityService        75.08              150.16       500
+CachedRoomAvailabilityService       7.21               14.42        48
+Cache hits: 452, misses: 48, hit ratio: 90.4%
+Прискорення: x10.4, навантаження на БД менше в x10.4

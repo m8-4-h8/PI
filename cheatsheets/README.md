@@ -9,3 +9,4 @@
 | 3 | Clean Architecture, Ports & Adapters | [lab3.md](lab3.md) |
 | 4 | TDD, property-based, мутационное тестирование | [lab4.md](lab4.md) |
 | 5 | PostgreSQL: индексы, EXPLAIN, изоляция | [lab5.md](lab5.md) |
+| 6 | NoSQL, CAP, Cache-aside | [lab6.md](lab6.md) |
