@@ -1,0 +1,3 @@
+/internal/support/guests-vulnerable?last_name="' OR '1'='1" -> 5 рядків: [[1, 'taras@example.com', '+380501111111', 1200], [2, 'olena@example.com', '+380502222222', 300], [3, 'ivan@example.com', '+380503333333', 50], [4, 'sean@example.com', '+353861234567', 900], [5, 'petro@example.com', '+380505555555', 0]]
+/internal/support/guests?last_name="' OR '1'='1" -> 0 рядків: []
+/internal/support/guests?last_name="O'Brien" -> [[4, 'sean@example.com', '+353861234567', 900]]

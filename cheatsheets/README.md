@@ -12,3 +12,4 @@
 | 6 | NoSQL, CAP, Cache-aside | [lab6.md](lab6.md) |
 | 7 | Sync vs Async: REST, Kafka, идемпотентность | [lab7.md](lab7.md) |
 | 8 | Bounded Contexts, карта контекстов, Strangler Fig | [lab8.md](lab8.md) |
+| 9 | STRIDE, SQL-инъекция, OAuth 2.0 | [lab9.md](lab9.md) |

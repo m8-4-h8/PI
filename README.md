@@ -10,7 +10,8 @@
 - [Лабораторна №6 — NoSQL, CAP, Cache-aside](lab6/README.md)
 - [Лабораторна №7 — REST API, Kafka, ідемпотентність](lab7/README.md)
 - [Лабораторна №8 — Bounded Contexts, Strangler Fig (StayHub)](lab8/README.md)
+- [Лабораторна №9 — STRIDE, SQL-ін'єкція, OAuth 2.0](lab9/README.md)
 
 Шпаргалки до захисту: [cheatsheets/](cheatsheets/README.md).
 
-Python 3.10+. Лаби 1–3 — без сторонніх бібліотек (інтеграційний тест лаби 3 — `psycopg2-binary`). Лаба 4 — `pip install -r lab4/requirements.txt`. Лаба 5 — PostgreSQL 13+. Лаби 6–7 — без сторонніх бібліотек.
+Python 3.10+. Лаби 1–3 — без сторонніх бібліотек (інтеграційний тест лаби 3 — `psycopg2-binary`). Лаба 4 — `pip install -r lab4/requirements.txt`. Лаба 5 — PostgreSQL 13+. Лаби 6–7 — без сторонніх бібліотек. Лаба 9 — `pip install -r lab9/requirements.txt`.
