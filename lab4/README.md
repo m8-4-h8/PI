@@ -8,12 +8,20 @@
 
 Python 3.10+, pytest, hypothesis, mutmut.
 
+Усі команди запускаються з папки `lab4`:
+
 ```
-pip install -r requirements.txt
-pytest -v          # усі тести
-mutmut run         # мутаційне тестування (налаштування в setup.cfg)
+cd lab4
+python -m pip install -r requirements.txt          # pytest + hypothesis
+python main.py                                     # демонстрація розрахунку знижки
+python -m pytest -v                                # усі тести
+
+python -m pip install -r requirements-mutmut.txt   # лише для мутаційного тестування
+mutmut run                                         # налаштування в setup.cfg
 mutmut results
 ```
+
+`mutmut` винесено в окремий файл: mutmut 2.5.1 залежить від `glob2`, який на деяких системах не збирається, і тоді `pip` не встановлював навіть `hypothesis` — тести падали з `ModuleNotFoundError: No module named 'hypothesis'`.
 
 ## Структура
 
@@ -21,6 +29,7 @@ mutmut results
 lab4/
 ├── original/loyalty_discount_buggy.py   # код до виправлення (для звіту)
 ├── loyalty/discount.py                  # LoyaltyDiscountCalculator (після виправлення)
+├── main.py                              # демонстрація запуску
 ├── tests/test_discount.py               # 2 старі тести + RED-тест + 2 property-based
 ├── results/                             # повні виводи pytest і mutmut
 ├── pyproject.toml                       # налаштування pytest

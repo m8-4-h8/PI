@@ -1,3 +1,2 @@
 pytest>=8
 hypothesis>=6
-mutmut==2.5.1
